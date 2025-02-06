@@ -1,0 +1,5 @@
+s|s|0
+Woda|Woda do picia|1
+Umyc dupe|Wykompac sie|1
+Dupa|Cos|2
+KOLEJNE|e|2
