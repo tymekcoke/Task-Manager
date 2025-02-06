@@ -6,6 +6,8 @@
 *.so
 *.a
 *.lib
+*.txt
+kalkulator.c
 
 # Ignorowanie folderów build i kompilacji
 /build/
