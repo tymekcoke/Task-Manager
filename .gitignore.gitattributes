@@ -1,0 +1,30 @@
+# Ignorowanie plików binarnych i obiektowych
+*.o
+*.out
+*.exe
+*.dll
+*.so
+*.a
+*.lib
+
+# Ignorowanie folderów build i kompilacji
+/build/
+/bin/
+/obj/
+
+# Pliki generowane przez kompilatory i IDE
+*.log
+*.tmp
+*.swp
+*.swo
+*.bak
+*.dep
+*.d
+*.suo
+*.ncb
+*.user
+*.vcxproj*
+*.sln
+
+# Debugger
+gmon.out
