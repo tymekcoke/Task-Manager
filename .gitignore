@@ -7,7 +7,9 @@
 *.a
 *.lib
 *.txt
+
 kalkulator.c
+C.code-workspace
 
 # Ignorowanie folderów build i kompilacji
 /build/
