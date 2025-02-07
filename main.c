@@ -32,6 +32,10 @@ void dodajZadanieDoPliku(Zadanie zadania[], int *ilosc_zadan, const char *nazwa_
     printf("Podaj opis zadania: ");
     fgets(zadanie.opis, MAX_OPIS, stdin);
     zadanie.opis[strcspn(zadanie.opis, "\n")] = '\0';
+    
+    if (strlen(zadanie.opis) == 0) {
+        strcpy(zadanie.opis, "Bez opisu");
+    }
 
     printf("Podaj priorytet (1-wysoki, 2-sredni, 3-niski): ");
     scanf("%d", &zadanie.priorytet);
