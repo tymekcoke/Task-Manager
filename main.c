@@ -83,6 +83,65 @@ void wyswietlZadania(Zadanie zadania[], int ilosc_zadan) {
     }
 }
 
+void wyswietlTytuly(Zadanie zadania[], int ilosc_zadan){
+    if (ilosc_zadan == 0) {
+        printf("Brak zapisanych zadań.\n");
+        return;
+    }
+
+    printf("\nLista zadań:\n");
+    for (int i = 0; i < ilosc_zadan; i++) {
+        printf("Zadanie %d:\n", i + 1);
+        printf("  Tytuł: %s\n", zadania[i].tytul);
+    }
+}
+
+void usunZadanieZPliku(Zadanie zadania[], int *ilosc_zadan, const char *nazwa_pliku){
+
+    if (*ilosc_zadan == 0) {
+        printf("Brak zapisanych zadań.\n");
+        return;
+    }
+    
+    Zadanie zadanie;
+    FILE *plik = fopen(nazwa_pliku, "w");
+    if (plik == NULL) {
+        printf("Błąd: Nie można otworzyć pliku.\n");
+        return;
+    }
+
+    printf("Które zadanie chcesz usunąć?\n");
+    wyswietlTytuly(zadania, *ilosc_zadan);
+
+    int numer_do_usuniecia;
+    printf("\nPodaj nr zadania do usunięcia: ");
+    scanf("%d", &numer_do_usuniecia);
+
+    if (numer_do_usuniecia > *ilosc_zadan || numer_do_usuniecia < 1){
+        printf("\nNiepoprawny numer zadania\n\n");
+        return;
+    }
+
+    printf("%s\n", zadania[numer_do_usuniecia-1].tytul);
+
+    int temp = numer_do_usuniecia;
+    for (int i = 0; i < *ilosc_zadan - numer_do_usuniecia; i++){
+        zadania[temp-1] = zadania[temp];
+        temp++;
+    }
+
+    (*ilosc_zadan)--;
+    
+    for (int j = 0; j < *ilosc_zadan; j++) {
+        fprintf(plik, "%s|%s|%d\n",
+                zadania[j].tytul,
+                zadania[j].opis,
+                zadania[j].priorytet);
+    }
+    
+    fclose(plik);
+}
+
 int main() {
     Zadanie *zadania = malloc(MAX_ZADANIA * sizeof(Zadanie));
     if (zadania == NULL) {
@@ -94,12 +153,14 @@ int main() {
 
     wgrajZadania(zadania, &ilosc_zadan, "zadania.txt");
 
+    
     int wybor;
     do {
         printf("\nMENU:\n");
         printf("1. Dodaj zadanie\n");
-        printf("2. Wyświetl zadania\n");
-        printf("3. Wyjdź\n");
+        printf("2. Usuń zadanie\n");
+        printf("3. Wyświetl zadania\n");
+        printf("4. Wyjdź\n");
         printf("Twój wybór: ");
         scanf("%d", &wybor);
         getchar(); 
@@ -109,15 +170,18 @@ int main() {
                 dodajZadanieDoPliku(zadania, &ilosc_zadan, "zadania.txt");
                 break;
             case 2:
-                wyswietlZadania(zadania, ilosc_zadan);
+                usunZadanieZPliku(zadania, &ilosc_zadan, "zadania.txt");
                 break;
             case 3:
+                wyswietlZadania(zadania, ilosc_zadan);
+                break;
+            case 4:
                 printf("Zamykanie programu...\n");
                 break;
             default:
                 printf("Niepoprawny wybór! Spróbuj ponownie.\n");
         }
-    } while (wybor != 3);
+    } while (wybor != 4);
 
     free(zadania);
     return 0;
